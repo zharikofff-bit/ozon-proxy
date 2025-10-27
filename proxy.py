@@ -4,9 +4,13 @@ import os
 
 app = Flask(__name__)
 
-# Получаем ключи из переменных окружения
-CLIENT_ID = os.environ.get('OZON_CLIENT_ID', '1711413')
-API_KEY = os.environ.get('OZON_API_KEY', 'eda4f687-acad-41b9-832c-e78ced0ecf47')
+# Получаем ключи из переменных окружения (БЕЗ значений по умолчанию)
+CLIENT_ID = os.environ.get('OZON_CLIENT_ID')
+API_KEY = os.environ.get('OZON_API_KEY')
+
+# Проверяем, что ключи заданы
+if not CLIENT_ID or not API_KEY:
+    raise ValueError("Не заданы OZON_CLIENT_ID или OZON_API_KEY в переменных окружения")
 
 @app.route('/v3/posting/fbs/list', methods=['POST'])
 def ozon_fbs_list():
